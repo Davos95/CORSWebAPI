@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@section scripts {
+    <script>
+    $(document).ready(function () {
+        cargarPeliculas();
+    });
+
+    function cargarPeliculas() {
+        var url = "http://localhost:56823/api/Peliculas";
+        $.getJSON(url, function (data) {
+            var html = "";
+            $.each(data, function (key, pelicula) {
+                html += "<tr>";
+                html += "<td>" + pelicula.Titulo + "</td>";
+                html += "<td>" + pelicula.Descripcion + "</td>";
+                html += "<td>" + pelicula.FechaEstreno + "</td>";
+                html += "<td><img src='" + pelicula.Url + "' style='width: 75px; height:150px' /></td>";
+                html += "</tr>";
+            });
+            $("#informacion").append(html);
+        });
+    }
+    </script>
+}
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Titulo</th>
+            <th>Sinopsis</th>
+            <th>Fecha de estreno</th>
+            <th>Imagen</th>
+        </tr>
+    </thead>
+    <tbody id="informacion"></tbody>
+</table>
